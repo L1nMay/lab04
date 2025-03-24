@@ -1,18 +1,21 @@
 language: cpp
-script:
-- cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
-- cmake --build _build
-- cmake --build _build --target install
+dist: bionic # Ubuntu 18.04 (LTS)
+
+compiler:
+  - gcc
+  - clang
+
 addons:
-apt:
-sources:
-- george-edison55-precise-backports
-packages:
-- cmake
-- cmake-data
+  apt:
+    packages:
+      - cmake
+      - cmake-data # Удалите, если CMake уже установлен dist
 before_install:
   - sudo apt-get update
+
 install:
-  - sudo apt-get install -y cmake cmake-data
-  - cmake .
-  - make
+  - sudo apt-get install -y cmake # Оставляем только здесь
+  - cmake . # Создаем Makefile
+
+script:
+  - make # Собираем проект~
